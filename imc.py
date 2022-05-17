@@ -3,6 +3,7 @@
 import streamlit as st
 
 st.title('Calculadora de Índice de Massa Corpórea (IMC)')
+st.write('Created by Hellano Vieira (hellano.vda@gmail.com)')
 
 with st.expander('Saiba mais sobre o IMC'):
      st.write("""
