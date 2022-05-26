@@ -50,7 +50,30 @@ if menu == 'Calculadora IMC':
 if menu == 'Exemplo Análise de Dados':
     st.title('Aplicação como Dados')
     
-    dados = pd.read_csv('~/Documentos/Projetos Python/Projeto IMC/diabetes.csv', sep = ',')
+    #### Leitura da Base ####
+    @st.cache
+    def read(file_name):
+        # define parameters for a request
+        token = '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'
+        owner = 'Hellano0209'
+        repo = 'Projeto-IMC'
+        path = file_name
+    
+        # send a request
+        r = requests.get(
+            'https://api.github.com/repos/{}/{}/contents/{}'.format(owner, repo, path), 
+            headers={'accept': 'application/vnd.github.v3.raw', 'authorization': 'token {}'.format(token)}
+            )
+
+        # convert string to StringIO object
+        string_io_obj = StringIO(r.text)
+
+        # Load data
+        df = pd.read_csv(string_io_obj, sep=',')
+    
+    return df
+    
+    dados = read('diabetes.csv')
 
     with st.expander('Saiba mais sobre os dados'):
          st.write("""
