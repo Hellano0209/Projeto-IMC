@@ -71,7 +71,7 @@ if menu == 'Exemplo Análise de Dados':
         # Load data
         df = pd.read_csv(string_io_obj, sep=',')
     
-    return df
+        return df
     
     dados = read('diabetes.csv')
 
