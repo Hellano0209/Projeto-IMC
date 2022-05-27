@@ -1,7 +1,10 @@
 #### PROJETO IMC ####
 
 import streamlit as st
+from io import StringIO
+import requests
 import pandas as pd
+import matplotlib.pyplot as plt
 
 st.sidebar.write('Created by Hellano Vieira (hellano.vda@gmail.com)')
 
@@ -54,7 +57,7 @@ if menu == 'Exemplo Análise de Dados':
     @st.cache
     def read(file_name):
         # define parameters for a request
-        token = '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'
+        token = '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'
         owner = 'Hellano0209'
         repo = 'Projeto-IMC'
         path = file_name
@@ -91,3 +94,44 @@ if menu == 'Exemplo Análise de Dados':
     
     st.dataframe(dados[['BMI', 'Age', 'Outcome']].describe())
     
+    st.header('Gráficos')
+    
+    col1, col2, col3 = st.columns(3)
+    
+    plt.style.use('ggplot')
+    
+    with col1:
+        st.selectbox('Tipo de Gráfico (IMC)', ['Histograma', 'Box-plot'], key = 'imc_fig')
+        
+        fig_imc, ax_imc = plt.subplots()
+        
+        if st.session_state.imc_fig == 'Histograma':
+            ax_imc.hist(dados['BMI'])
+            st.pyplot(fig_imc)
+        else:
+            ax_imc.boxplot(dados['BMI'])
+            st.pyplot(fig_imc)
+            
+    with col2:
+        st.selectbox('Tipo de Gráfico (Idade)', ['Histograma', 'Box-plot'], key = 'age_fig')
+        
+        fig_age, ax_age = plt.subplots()
+        
+        if st.session_state.age_fig == 'Histograma':
+            ax_age.hist(dados['Age'])
+            st.pyplot(fig_age)
+        else:
+            ax_age.boxplot(dados['Age'])
+            st.pyplot(fig_age)
+            
+    with col3:
+        st.selectbox('Tipo de Gráfico (Diabetes)', ['Barras', 'Dispersão'], key = 'diab_fig')
+        
+        fig_diab, ax_diab = plt.subplots()
+        
+        if st.session_state.diab_fig == 'Barras':
+            ax_diab.bar([0, 1], dados['Outcome'].value_counts()/dados.shape[0])
+            st.pyplot(fig_diab)
+        else:
+            ax_diab.scatter(dados['Outcome'], range(1, dados.shape[0]+1))
+            st.pyplot(fig_diab)
