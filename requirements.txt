@@ -1,4 +1,3 @@
 matplotlib
-io
 requests
 pandas
