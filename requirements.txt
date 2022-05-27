@@ -1,1 +1,4 @@
 matplotlib
+StringIO
+requests
+pandas
