@@ -57,7 +57,7 @@ if menu == 'Exemplo Análise de Dados':
     @st.cache
     def read(file_name):
         # define parameters for a request
-        token = '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'
+        token = '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'
         owner = 'Hellano0209'
         repo = 'Projeto-IMC'
         path = file_name
