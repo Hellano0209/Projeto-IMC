@@ -55,28 +55,21 @@ if menu == 'Exemplo Análise de Dados':
     
     #### Leitura da Base ####
     @st.cache
-    def read(file_name):
-        # define parameters for a request
-        token = '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'
-        owner = 'Hellano0209'
-        repo = 'Projeto-IMC'
-        path = file_name
+    def read_open_git(url):
     
         # send a request
-        r = requests.get(
-            'https://api.github.com/repos/{}/{}/contents/{}'.format(owner, repo, path), 
-            headers={'accept': 'application/vnd.github.v3.raw', 'authorization': 'token {}'.format(token)}
-            )
+        r = requests.get(url).content
 
         # convert string to StringIO object
-        string_io_obj = StringIO(r.text)
+        string_io_obj = StringIO(r.decode('utf-8'))
 
         # Load data
         df = pd.read_csv(string_io_obj, sep=',')
     
         return df
     
-    dados = read('diabetes.csv')
+    url = 'https://raw.githubusercontent.com/Hellano0209/Projeto-IMC/main/diabetes.csv'
+    dados = read_open_git(url)
 
     with st.expander('Saiba mais sobre os dados'):
          st.write("""
